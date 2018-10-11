@@ -12,5 +12,10 @@ class GameTest < Minitest::Test
     game = Game.new
     assert_equal "p", game.start_prompt
   end
-  
+
+  def test_if_we_can_print_ship_coordinates
+    game = Game.new
+    assert_equal coordinate, status, game.gets_coordinates("a1", "F")
+  end
+
 end

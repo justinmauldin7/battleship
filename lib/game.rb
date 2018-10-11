@@ -1,5 +1,5 @@
-require './lib/ship'
-require './lib/spaces'
+# require './lib/ship'
+# require './lib/spaces'
 require './lib/board'
 
 
@@ -36,5 +36,12 @@ end
 end
 
 
+def gets_coordinates(coordinate, status = "E")
+  ship_coordinates == gets.chomp
+  ship_board = Board.new
+  # hit_board = Board.new
+  ship_board.template[coordinate, "F"]
+  # hit_board.template[ship_coordinates, "M"]
+end
 
 end
