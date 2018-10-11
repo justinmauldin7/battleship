@@ -8,7 +8,7 @@ def initialize
   @ship = Ship.new
 end
 
-def 
+def stuff
 end
 
 def take_a_shot

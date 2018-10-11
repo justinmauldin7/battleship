@@ -1,9 +1,5 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative '/test/test_helper'
 require './lib/spaces'
-require 'pry'
 
 class SpaceTest < Minitest::Test
 
