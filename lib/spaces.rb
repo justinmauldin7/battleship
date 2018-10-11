@@ -1,20 +1,14 @@
+require './lib/ship'
+
 class Space
-attr_accessor
-def initialize(coordinates)
-  @coordinates = {}
+attr_accessor :shot, :ship
+def initialize
+  @shot = shot
+  @ship = Ship.new
 end
 
-def template
-  space_a1 = Space.new({"a" => 1})
-  space_a2 = Space.new({"a" => 2})
-  space_a3 = Space.new({"a" => 3})
-  space_a4 = Space.new({"a" => 4})
-
-  space_b1 = Space.new({"b" => 1})
-  space_b2 = Space.new({"b" => 2})
-  space_b3 = Space.new({"b" => 3})
-  space_b4 = Space.new({"b" => 4})
-
+def take_a_shot
+  # get coordinates of shot from user
 end
 
 # def ship_placement(row_letter, column_number, ship_length)
