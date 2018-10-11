@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative '/test/test_helper'
 require './lib/game'
 
 class GameTest < Minitest::Test
