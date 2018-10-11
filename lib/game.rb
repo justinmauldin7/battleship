@@ -17,16 +17,24 @@ def welcome
   puts " "
   puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
 
-  gets.chomp
+loop do
 
-  if gets.chomp == "p"
-    #play the game
-  elsif gets.chomp == "i"
-    #show instructions
-  elsif gets.chomp == "q"
-    #quit the game
-  else
-    #enter a valid prompt
+answer = gets.chomp
+
+if answer != "p" && answer != "i"
+  break
 end
+
+    if (answer == "p")
+      p "play the game"
+    elsif (answer == "i")
+      p "show instructions"
+    else
+      puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+  end
+end
+end
+
+
 
 end
