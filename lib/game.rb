@@ -28,20 +28,20 @@ class Game
       end
 
         if (answer == "p")
-          p "play the game"
+          puts "play the game"
           break
         elsif (answer == "i")
-          p "Instructions:"
-          p " "
-          p "1. The computer will place some ships."
-          p "2. You will get to place some ships."
-          p "3. You will get to fire a missile."
-          p "4. Tjhe computer will fire a missile."
-          p "5. You will receive feedback on your launches."
-
+          puts "Instructions:"
+          puts '================================================'
+          puts '1. The computer will place some ships.'
+          puts "2. You will get to place some ships."
+          puts "3. You will get to fire a missile."
+          puts "4. The computer will fire a missile."
+          puts "5. You will receive feedback on your launches."
+          puts "================================================"
           break
         elsif (answer == "q")
-          p "Thanks for playing!"
+          puts "Thanks for playing!"
           break
         else
           puts "Please try your another response (p/i/q)"
@@ -51,12 +51,48 @@ class Game
 
   end
 
-  #def gets_coordinates(coordinate, status = "E")
-  #  ship_coordinates == gets.chomp
-  #  ship_board = Board.new
-  #  # hit_board = Board.new
-  #  ship_board.template(coordinate, "F")
-  #  # hit_board.template[ship_coordinates, "M"]
-  #end
+  def gets_coordinates(coordinate, status = "E")
+    ship_coordinates == gets.chomp
+    ship_board = Board.new
+    hit_board = Board.new
+    ship_board.template(coordinate, "F")
+    # hit_board.template[ship_coordinates, "M"]
+  end
+
+  def prompt_for_a_shot
+      #ask for coordinates
+  end
+
+  def display_shot_info
+    #display the coordinates of shot from user
+  end
+
+  def display_the_map
+    #display the ship and hit info from the board class
+  end
+
+  def computer_feedback_to_user
+    #give info on whether or not the computer
+    #hit or missed the player's ship
+  end
+
+  def display_computer_hits_and_misses
+    #display the board with h/misses
+  end
+
+  def end_game_sequence
+    #give message to user based on
+    #ship.game_over
+  end
+
+  def game_time
+    #calculate time elapsed
+  end
+
+  def number_of_shots
+    #maybe player holds shots taken
+    #this method
+    #+= the shots integer
+  end
 
 end
