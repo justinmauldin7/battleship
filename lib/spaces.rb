@@ -3,8 +3,12 @@ require './lib/ship'
 class Space
 attr_accessor :shot, :ship
 def initialize
+  @starting_coordinate = starting_coordinate
   @shot = shot
   @ship = Ship.new
+end
+
+def 
 end
 
 def take_a_shot

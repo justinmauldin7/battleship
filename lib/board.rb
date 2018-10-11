@@ -3,6 +3,7 @@ require './lib/spaces'
 class Board
   attr_accessor :template
   def initialize
+    @template = template
   end
 
 
