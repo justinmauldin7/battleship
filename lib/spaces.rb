@@ -6,7 +6,7 @@ attr_accessor :shot, :ship
   def initialize(coordinate)
     @coordinate = coordinate
     @shot = 0 #0-empty, 1-miss, 2-hit integer
-    @ship = ship
+    @ship = ship #number of ships
     #@status = status #string of shot
   end
 

@@ -8,7 +8,7 @@ class PlayerTest
   end
 
   def test_player_exists
-
+    assert_equal Player, @human
   end
 
 end
