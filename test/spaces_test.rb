@@ -1,4 +1,4 @@
-require_relative '/test/test_helper'
+require './test/test_helper'
 require './lib/spaces'
 
 class SpaceTest < Minitest::Test
@@ -16,4 +16,9 @@ end
     assert_instance_of Space, @space_c4
     assert_instance_of Space, @space_d2
   end
+
+  def test_it_adds_a_shot
+      assert_equal 1, @space_a1.add_shot_status
+  end
+
 end

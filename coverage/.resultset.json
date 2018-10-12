@@ -1,23 +1,51 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/justinmauldin/turing/1module/projects/battleship/lib/spaces.rb": [
+      "/Users/jennicastiehl/Github/Turing/1module/projects/battleship/lib/spaces.rb": [
+        1,
+        null,
         1,
         1,
+        null,
         1,
+        8,
+        8,
         8,
         null,
         null,
+        null,
         1,
         1,
-        2,
-        2,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/jennicastiehl/Github/Turing/1module/projects/battleship/lib/ship.rb": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
         null,
         null,
         null,
         null
       ]
     },
-    "timestamp": 1539109746
+    "timestamp": 1539303045
   }
 }
