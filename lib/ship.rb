@@ -3,10 +3,12 @@ require './lib/board'
 
 class Ship
   attr_reader :status
-  attr_accessor :length
-  def initialize(length, status = "Afloat")
+  attr_accessor :length, :coordinates
+
+  def initialize(length, coordinates, status = "Afloat")
     @length = length
     @status = status
+    @coordinates = []
 
   end
 

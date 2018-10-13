@@ -13,7 +13,7 @@ class Game
   def initialize
     @number_of_players = number_of_players
     @boad_size = boad_size
-    @number_of_ships = number_of_ships
+    @number_of_ships = 2
     @game_time = game_time
     @human_board = Board.new
     @computer_board = Board.new
@@ -59,13 +59,23 @@ class Game
   end
 
   def user_input_for_coordinates
-   user_input = gets.chomp
-  coordinates = coordinates.split(" ")
-end
+    @number_of_ships.times do |entry|
+      puts "Please enter the coordinates for your ship to be placed on the board. "
+      user_input = gets.chomp
+      coordinates = user_input.split(" ")
+
+      coordinates.each do |key|
+        binding.pry
+        @human_board.template[key]
+        @human_board.template.state = "F"
+        binding.pry
+      end
+    end
+  end
 
 def user_input_assembly(coordinates)
   #this assembles all the user_input_for_coordinates method
-  
+
 end
 
 def coordinates_validation
