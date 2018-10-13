@@ -4,9 +4,9 @@ game_1 = Game.new
 game_1.welcome
 #initialize
 #create boards
-ship_board = Board.new
 #create players
-human_player = Player.new
+
+#human_player = Player.new
 #create spaces
 
 

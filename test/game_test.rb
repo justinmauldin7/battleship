@@ -7,14 +7,12 @@ class GameTest < Minitest::Test
     assert_instance_of Game, game
   end
 
-  def test_the_game_starts
+  def test_if_we_can_print_ship_coordin
     game = Game.new
-    assert_equal "p", game.start_prompt
+    assert_equal "E", game.gets_coordinates()
   end
 
-  def test_if_we_can_print_ship_coordinates
-    game = Game.new
-    assert_equal coordinate, status, game.gets_coordinates("a1", "F")
+  def test_
   end
 
 end

@@ -7,12 +7,16 @@ class Game
                 :boad_size,
                 :number_of_ships,
                 :game_time
+                :human_board
+                :computer_board
 
   def initialize
     @number_of_players = number_of_players
     @boad_size = boad_size
     @number_of_ships = number_of_ships
     @game_time = game_time
+    @human_board = Board.new
+    @computer_board = Board.new
   end
 
   def welcome
@@ -29,6 +33,9 @@ class Game
 
         if (answer == "p")
           puts "play the game"
+          #create boards
+          #place ships
+
           break
         elsif (answer == "i")
           puts "Instructions:"
@@ -51,12 +58,29 @@ class Game
 
   end
 
-  def gets_coordinates(coordinate, status = "E")
-    ship_coordinates == gets.chomp
-    ship_board = Board.new
-    hit_board = Board.new
-    ship_board.template(coordinate, "F")
-    # hit_board.template[ship_coordinates, "M"]
+  def user_input_for_coordinates
+   user_input = gets.chomp
+  coordinates = coordinates.split(" ")
+end
+
+def user_input_assembly(coordinates)
+  #this assembles all the user_input_for_coordinates method
+  
+end
+
+def coordinates_validation
+  #need a method for placement validation
+end
+
+def ship_placement(array)
+  #gets an array #["a1", "a2"]
+  #retrieve ship coordinates from player for 2 ships
+  #(cannot wrap around the board, cannot overlap,
+  #must be veritcal or horizontal)
+end
+
+
+  def gets_spaces_status
   end
 
   def prompt_for_a_shot
