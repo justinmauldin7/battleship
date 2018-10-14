@@ -3,7 +3,7 @@ require './lib/board'
 require 'pry'
 
 game = Game.new
-  game.user_input_for_coordinates
+  game.human_ship_placement
 
 
 

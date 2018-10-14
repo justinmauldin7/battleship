@@ -32,7 +32,9 @@ class Game
       end
 
         if (answer == "p")
-          puts "play the game"
+          @number_of_ships.times do |method|
+          human_ship_placement
+          end
           #create boards
           #place ships
 
@@ -58,35 +60,63 @@ class Game
 
   end
 
-  def user_input_for_coordinates
-    @number_of_ships.times do |entry|
-      puts "Please enter the coordinates for your ship to be placed on the board. "
-      user_input = gets.chomp
-      coordinates = user_input.split(" ")
+  def computer_ship_placement
+    two_space_ships = ["a1 a2", "a2 a3", "a3 a4", "b1 b2", "b2 b3", "b3 b4"
+    #   ,
+    #   "c1 c2", "c2 c3", "c3 c4", "d1 d2", "d2 d3", "d3 d4",
+    # "a1 b1", "b1 c1", "c1 d1", "a2 b2", "b2 c2", "c2 d2",
+    # "a3 b3", "b3 c3", "c3 d3", "a4 b4", "b4 c4", "c4 d4"
+  ]
+    three_space_ships = ["b2 c2 d2", "b3 c3 d3", "b4 c4 d4"]
+    randomizer = Random.new
+    random_index_1 = randomizer.rand(0..2)
+    two_ship_array = two_space_ships.values_at(random_index_1)
+    two_ship_string = two_ship_array[0]
+    two_ship_split = two_ship_string.split(" ")
 
-      coordinates.each do |key|
-        binding.pry
-        @human_board.template[key]
-        @human_board.template.state = "F"
-        binding.pry
-      end
+    convert_coordinate_1 = two_ship_split.map do |index|
+      index.to_sym
+    end
+
+    convert_coordinate_1.each do |key|
+      chosen_state = @computer_board.template[key]
+      chosen_state.state = "F"
+    end
+
+    random_index_2 = randomizer.rand(0..2)
+    three_ship_array = three_space_ships.values_at(random_index_2)
+    three_ship_string = three_ship_array[0]
+    three_ship_split = three_ship_string.split(" ")
+
+
+    convert_coordinate_2 = three_ship_split.map do |index|
+      index.to_sym
+    end
+
+    convert_coordinate_2.each do |key|
+      chosen_state = @computer_board.template[key]
+      chosen_state.state = "F"
     end
   end
 
-def user_input_assembly(coordinates)
-  #this assembles all the user_input_for_coordinates method
+  def human_ship_placement
+    puts "Please enter the coordinates for your ship to be placed on the board. "
+    user_input = gets.chomp.downcase
+    coordinates = user_input.split(" ")
+    convert_coordinate = coordinates.map do |index|
+      index.to_sym
+    end
 
-end
+    convert_coordinate.each do |key|
+      binding.pry
+      chosen_state = @human_board.template[key]
+      chosen_state.state = "F"
+    end
+  end
+
 
 def coordinates_validation
   #need a method for placement validation
-end
-
-def ship_placement(array)
-  #gets an array #["a1", "a2"]
-  #retrieve ship coordinates from player for 2 ships
-  #(cannot wrap around the board, cannot overlap,
-  #must be veritcal or horizontal)
 end
 
 

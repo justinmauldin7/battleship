@@ -3,9 +3,10 @@ require './lib/ship'
 class Space
 attr_accessor :shot_status, :state
 
-  def initialize
-    @shot_status = nil #, M, H
-    @state = "E" #empty or full (E/F)
+  def initialize(shot_status = nil , state = "E")
+    @shot_status = shot_status #, M, H
+    @state = state #empty or full (E/F)
+    
   end
 
   def add_shot_status
