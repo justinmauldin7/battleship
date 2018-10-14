@@ -4,7 +4,10 @@ require 'pry'
 
 game = Game.new
   game.human_ship_placement
-
+  game.computer_ship_placement
+  binding.pry
+  #@human_board.each do |ships|
+puts @human_board.state
 
 
 
