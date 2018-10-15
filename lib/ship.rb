@@ -5,10 +5,10 @@ class Ship
   attr_reader :status
   attr_accessor :length, :coordinates
 
-  def initialize(length, coordinates, status = "Afloat")
+  def initialize(status = "Afloat")
     @length = length
     @status = status
-    @coordinates = []
+    @coordinates = coordinates
 
   end
 

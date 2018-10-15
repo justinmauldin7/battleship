@@ -34,36 +34,4 @@ class Board
     puts "D #{@template[:d1].shot_status} #{@template[:d2].shot_status} #{@template[:d3].shot_status} #{@template[:d4].shot_status} "
     puts "==================="
   end
-
-  # def computer_ship_placement
-  #   #get random combinations of A-D & 1-4
-  #   #assign those to the board
-  #   #create a new ship Ship.new(coordinates)
-  #   #increment ship count by one
-  #   #update space to full
-  #
-  # end
-  #
-  # def human_ship_placement(coord_1, coord_2)
-  #
-  #   space_template["a1"]
-  #   aspace.state = "F"
-  #   #prompt user for coordinates
-  #   #assign those values to the board
-  #   #increment ship count by one
-  #   #update space to full
-  # end
-
-
-
-
-
-# def ship_placement(row_letter, column_number, ship_length)
-#   ship_length.times do |index|
-#   @array[column_number] = 1
-#   @array
-#   end
-# end
-
-
 end
