@@ -167,10 +167,11 @@ class Game
 # Helper methods that go with coordinate_validation
 #---------------------------------------------
 
-def cannot_overlap(human_or_computer_coordinates) 
+def cannot_overlap(human_or_computer_coordinates)
   if human_or_computer_coordinates.uniq == human_or_computer_coordinates
     puts "Passes validation 1"
   else
+    ask_for_correct_coordinates
     human_ship_placement
   end
 end
@@ -183,18 +184,35 @@ end
 def horizontal_or_vertical(human_or_computer_coordinates)
     get_array_values = human_or_computer_coordinates.map.with_index do |value, index|
     value.partition(/[[:alpha:]]/)
-  end
+    end
 
-  if get_array_values[0][1].ord == get_array_values[1][1].ord &&
-    get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i
+  if get_array_values.count == 2
+    if get_array_values[0][1].ord == get_array_values[1][1].ord &&
+      get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i
+        puts "Passes validation 2.1"
+    elsif get_array_values[0][1].ord + 1 == get_array_values[1][1].ord &&
+      get_array_values[0][2].to_i == get_array_values[1][2].to_i
+        puts "Passes validation 2.2"
+    else
+      ask_for_correct_coordinates
+      human_ship_placement
+    end
+  elsif get_array_values.count == 3
+    if get_array_values[0][1].ord == get_array_values[1][1].ord &&
+      get_array_values[1][1].ord == get_array_values[2][1].ord &&
+      get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i + 1 &&
+      get_array_values[1][2].to_i + 1 == get_array_values[2][2].to_i
       puts "Passes validation 2.1"
-  elsif get_array_values[0][1].ord + 1 == get_array_values[1][1].ord &&
-    get_array_values[0][2].to_i == get_array_values[1][2].to_i
-      puts "Passes validation 2.2"
-  else
-    human_ship_placement
+    elsif get_array_values[0][1].ord == get_array_values[1][1].ord &&
+      get_array_values[1][1].ord == get_array_values[2][1].ord &&
+      get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i &&
+      get_array_values[1][2].to_i + 1 == get_array_values[2][2].to_i
+        puts "Passes validation 2.2"
+    else
+      ask_for_correct_coordinates
+      human_ship_placement
+    end
   end
-
   #need an if statement and then loop over the original array
   #as we iterate over the array, we are going to grab the values and split them apart
   #and then get the 'ord' for the letters
