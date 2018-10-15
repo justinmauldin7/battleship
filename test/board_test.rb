@@ -33,18 +33,11 @@ class BoardTest < Minitest::Test
     assert_equal "F", board.
   end
 
-  def test_print_the_grid_method
-    skip
-    board = Board.new
-    expected =
-      "==================="
-      ". 1 2 3 4"
-      "A #{@template[:a1].shot_status} #{@template[:a2].shot_status} #{@template[:a3].shot_status} #{@template[:a4].shot_status} "
-      "B #{@template[:b1].shot_status} #{@template[:b2].shot_status} #{@template[:b3].shot_status} #{@template[:b4].shot_status} "
-      "C #{@template[:c1].shot_status} #{@template[:c2].shot_status} #{@template[:c3].shot_status} #{@template[:c4].shot_status} "
-      "D #{@template[:d1].shot_status} #{@template[:d2].shot_status} #{@template[:d3].shot_status} #{@template[:d4].shot_status} "
-      "==================="
-      assert_equal expected, board.print_the_grid
+  def test_it_puts_the_grid
+    board_1 = Board.new
+    output = " . 1 2 3 4 /n
+    A "
+    #binding.pry
+    assert_output (stdout = " ") {board_1.print_the_grid}
   end
-
 end

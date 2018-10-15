@@ -38,14 +38,24 @@ class Game
           puts "The first is two units long and the second is three units long."
           puts "The grid has A1 at the top left and D4 at the bottom right."
           puts " "
+
+
+
+          ----
+          computer_ship_placement
           @number_of_ships.times do |method|
           human_ship_placement
           end
-          computer_ship_placement
-          @human_board.print_the_ships
           @human_board.print_the_grid
-
-
+          @human_board.print_the_ships
+          puts "Please enter a of coordinate: "
+          input = gets.chomp.to_sym
+          player_1 = Player.new
+          player_1.human_takes_a_shot(input)
+          get_random_coordinates_for_computer_player
+          split_ship_array_and_convert_to_symbol(ship_array)
+          computer_takes_a_shot(convert_coordinate)
+          -----
           break
         elsif (answer == "i")
           puts "Instructions:"
