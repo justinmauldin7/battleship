@@ -15,6 +15,16 @@ class Board
     }
   end
 
+  def print_the_ships
+    puts "==================="
+    puts ". 1 2 3 4"
+    puts "A #{@template[:a1].state} #{@template[:a2].state} #{@template[:a3].state} #{@template[:a4].state} "
+    puts "B #{@template[:b1].state} #{@template[:b2].state} #{@template[:b3].state} #{@template[:b4].state} "
+    puts "C #{@template[:c1].state} #{@template[:c2].state} #{@template[:c3].state} #{@template[:c4].state} "
+    puts "D #{@template[:d1].state} #{@template[:d2].state} #{@template[:d3].state} #{@template[:d4].state} "
+    puts "==================="
+  end
+
   def print_the_grid
     puts "==================="
     puts ". 1 2 3 4"

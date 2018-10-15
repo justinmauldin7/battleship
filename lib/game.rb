@@ -42,9 +42,9 @@ class Game
           human_ship_placement
           end
           computer_ship_placement
+          @human_board.print_the_ships
           @human_board.print_the_grid
-          #create boards
-          #place ships
+
 
           break
         elsif (answer == "i")
@@ -90,7 +90,9 @@ class Game
       # elsif @ship_length == 3
         spaces_for_ship = [
           "a1 b1 c1", "a2 b2 c2", "a3 b3 c3", "a4 b4 c4",
-          "b1 c1 d1", "b2 c2 d2", "b3 c3 d3", "b4 c4 d4"
+          "b1 c1 d1", "b2 c2 d2", "b3 c3 d3", "b4 c4 d4",
+          "a1 a2 a3", "b1 b2 b3", "c1 c2 c3", "d1 d2 d3",
+          "a2 a3 a4", "b2 b3 b4", "c2 c3 c4", "d2 d3 d4"
         ]
       # end
     randomizer = Random.new
@@ -121,8 +123,8 @@ class Game
   def human_ship_placement
     coordinates = ask_for_coordinates_from_players
     human_validated_1 = cannot_overlap(coordinates)
-    human_validated_2 = horizontal_or_vertical(coordinates)
-    converted = convert_coordinate(coordinates)
+    valid_human_coordinates = horizontal_or_vertical(human_validated_1)
+    converted = convert_coordinate(valid_human_coordinates)
     change_space_state_for_player_1(converted)
 
 
@@ -136,8 +138,8 @@ class Game
     coordinates = user_input.split(" ")
   end
 
-  def convert_coordinate(coordinates)
-    converted = coordinates.map do |index|
+  def convert_coordinate(valid_human_coordinates)
+    converted = valid_human_coordinates.map do |index|
       index.to_sym
     end
     converted
@@ -171,6 +173,7 @@ class Game
 def cannot_overlap(human_or_computer_coordinates)
   if human_or_computer_coordinates.uniq == human_or_computer_coordinates
     puts "Passes validation 1"
+    human_validated_1 = human_or_computer_coordinates.uniq
   else
     ask_for_correct_coordinates
   end
@@ -186,13 +189,21 @@ def horizontal_or_vertical(human_or_computer_coordinates)
     value.partition(/[[:alpha:]]/)
     end
 
+    valid_human_coordinates = []
+
   if get_array_values.count == 2
     if get_array_values[0][1].ord == get_array_values[1][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i
+        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         puts "Passes validation 2.1"
+        valid_human_coordinates
     elsif get_array_values[0][1].ord + 1 == get_array_values[1][1].ord &&
       get_array_values[0][2].to_i == get_array_values[1][2].to_i
+        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         puts "Passes validation 2.2"
+        valid_human_coordinates
     else
       ask_for_correct_coordinates
     end
@@ -201,12 +212,20 @@ def horizontal_or_vertical(human_or_computer_coordinates)
       get_array_values[1][1].ord == get_array_values[2][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i + 1 &&
       get_array_values[1][2].to_i + 1 == get_array_values[2][2].to_i
-      puts "Passes validation 2.1"
+        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
+        valid_human_coordinates <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
+        puts "Passes validation 2.1"
+        valid_human_coordinates
     elsif get_array_values[0][1].ord == get_array_values[1][1].ord &&
       get_array_values[1][1].ord == get_array_values[2][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i &&
       get_array_values[1][2].to_i + 1 == get_array_values[2][2].to_i
+        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
+        valid_human_coordinates <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
         puts "Passes validation 2.2"
+        valid_human_coordinates
     else
       ask_for_correct_coordinates
     end
