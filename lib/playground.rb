@@ -5,9 +5,7 @@ require 'pry'
 game = Game.new
   game.human_ship_placement
   game.computer_ship_placement
-  binding.pry
-  #@human_board.each do |ships|
-puts @human_board.state
+  game.horizontal_or_vertical(["a1", "a2"])
 
 
 

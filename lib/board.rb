@@ -15,6 +15,16 @@ class Board
     }
   end
 
+  def print_the_grid
+    puts "==================="
+    puts ". 1 2 3 4"
+    puts "A #{@template[:a1].shot_status} #{@template[:a2].shot_status} #{@template[:a3].shot_status} #{@template[:a4].shot_status} "
+    puts "B #{@template[:b1].shot_status} #{@template[:b2].shot_status} #{@template[:b3].shot_status} #{@template[:b4].shot_status} "
+    puts "C #{@template[:c1].shot_status} #{@template[:c2].shot_status} #{@template[:c3].shot_status} #{@template[:c4].shot_status} "
+    puts "D #{@template[:d1].shot_status} #{@template[:d2].shot_status} #{@template[:d3].shot_status} #{@template[:d4].shot_status} "
+    puts "==================="
+  end
+
   # def computer_ship_placement
   #   #get random combinations of A-D & 1-4
   #   #assign those to the board

@@ -1,6 +1,7 @@
 require './lib/game'
 require './lib/board'
 require './lib/spaces'
+require 'pry'
 
 class Game
   attr_accessor :number_of_players,
@@ -32,11 +33,16 @@ class Game
       end
 
         if (answer == "p")
+          puts "I have laid out my ships on the grid."
+          puts "You now need to layout your two ships."
+          puts "The first is two units long and the second is three units long."
+          puts "The grid has A1 at the top left and D4 at the bottom right."
+          puts " "
           @number_of_ships.times do |method|
           human_ship_placement
           end
           computer_ship_placement
-
+          @human_board.print_the_grid
           #create boards
           #place ships
 
@@ -63,65 +69,33 @@ class Game
   end
 
   def computer_ship_placement
-    #get_random_coordinates_for_computer_player
-    two_space_ships =
-     ["a1 a2", "a2 a3", "a3 a4", "b1 b2", "b2 b3", "b3 b4",
-      "c1 c2", "c2 c3", "c3 c4", "d1 d2", "d2 d3", "d3 d4",
-      "a1 b1", "b1 c1", "c1 d1", "a2 b2", "b2 c2", "c2 d2",
-      "a3 b3", "b3 c3", "c3 d3", "a4 b4", "b4 c4", "c4 d4"
-      ]
-
-    three_space_ships = ["b2 c2 d2", "b3 c3 d3", "b4 c4 d4"]
-    randomizer = Random.new
-    random_index_1 = randomizer.rand(0..2)
-    two_ship_array = two_space_ships.values_at(random_index_1)
-    #split_ship_array_and_convert_to_symbol(ship_array)
-    two_ship_string = two_ship_array[0]
-    two_ship_split = two_ship_string.split(" ")
-
-    convert_coordinate_1 = two_ship_split.map do |index|
-      index.to_sym
-    end
-    #change_the_state(convert_coordinate)
-    convert_coordinate_1.each do |key|
-      chosen_state = @computer_board.template[key]
-      chosen_state.state = "F"
-    end
-
-    random_index_2 = randomizer.rand(0..2)
-    three_ship_array = three_space_ships.values_at(random_index_2)
-    three_ship_string = three_ship_array[0]
-    three_ship_split = three_ship_string.split(" ")
-
-
-    convert_coordinate_2 = three_ship_split.map do |index|
-      index.to_sym
-    end
-
-    convert_coordinate_2.each do |key|
-      chosen_state = @computer_board.template[key]
-      chosen_state.state = "F"
-    end
+    ship_array = get_random_coordinates_for_computer_player
+    convert_coordinate = split_ship_array_and_convert_to_symbol(ship_array)
+    # computer_validated = cannot_overlap(convert_coordinate)
+    # change_the_state(computer_validated)
+    change_the_state(convert_coordinate)
   end
   #---------------------------------------------
   # helper methods that go into computer_ship_placement
   #---------------------------------------------
   def get_random_coordinates_for_computer_player
     #number_of_ships_possible_in_battleship = 6
-      if @ship_length == 2
-        spaces_for_ship =
-         ["a1 a2", "a2 a3", "a3 a4", "b1 b2", "b2 b3", "b3 b4",
+      # if @ship_length == 2
+        spaces_for_ship = [
+           "a1 a2", "a2 a3", "a3 a4", "b1 b2", "b2 b3", "b3 b4",
           "c1 c2", "c2 c3", "c3 c4", "d1 d2", "d2 d3", "d3 d4",
           "a1 b1", "b1 c1", "c1 d1", "a2 b2", "b2 c2", "c2 d2",
           "a3 b3", "b3 c3", "c3 d3", "a4 b4", "b4 c4", "c4 d4"
           ]
-      elsif @ship_length == 3
-        spaces_for_ship = ["b2 c2 d2", "b3 c3 d3", "b4 c4 d4"]
-      end
+      # elsif @ship_length == 3
+        spaces_for_ship = [
+          "a1 b1 c1", "a2 b2 c2", "a3 b3 c3", "a4 b4 c4",
+          "b1 c1 d1", "b2 c2 d2", "b3 c3 d3", "b4 c4 d4"
+        ]
+      # end
     randomizer = Random.new
     random_index = randomizer.rand(0..2)
     ship_array = spaces_for_ship.values_at(random_index)
-    split_ship_array_and_convert_to_symbol(ship_array)
   end
 
   def split_ship_array_and_convert_to_symbol(ship_array)
@@ -134,8 +108,8 @@ class Game
       convert_coordinate
   end
 
-  def change_the_state(convert_coordinate)
-    convert_coordinate_2.each do |key|
+  def change_the_state(computer_validated)
+    computer_validated.each do |key|
       chosen_state = @computer_board.template[key]
       chosen_state.state = "F"
     end
@@ -145,21 +119,13 @@ class Game
 #---------------------------------------------
 
   def human_ship_placement
-    #ask_for_coordinates_from_players
-    #convert_coordinate(coordinates)
-    #change_space_state_for_player_1(converted)
-    puts "Please enter the coordinates for your ship to be placed on the board. "
-    user_input = gets.chomp.downcase
-    coordinates = user_input.split(" ")
+    coordinates = ask_for_coordinates_from_players
+    human_validated_1 = cannot_overlap(coordinates)
+    human_validated_2 = horizontal_or_vertical(coordinates)
+    converted = convert_coordinate(coordinates)
+    change_space_state_for_player_1(converted)
 
-    convert_coordinate = coordinates.map do |index|
-      index.to_sym
-    end
 
-    convert_coordinate.each do |key|
-      chosen_state = @human_board.template[key]
-      chosen_state.state = "F"
-    end
   end
 #---------------------------------------------
 # helper methods that go into human_ship_placement
@@ -171,22 +137,74 @@ class Game
   end
 
   def convert_coordinate(coordinates)
-    coordinates.map do |index|
-    converted = index.to_sym
+    converted = coordinates.map do |index|
+      index.to_sym
     end
+    converted
   end
 
-  def change_space_state_for_player_1(converted)
-    converted.each do |key|
+  def change_space_state_for_player_1(human_validated)
+    human_validated.each do |key|
     chosen_state = @human_board.template[key]
     chosen_state.state = "F"
       end
   end
+
+
+
+  def coordinates_validation
+    cannot_overlap
+    cannot_go_over_board
+    #horizontal_or_vertical & next_to_each_other
+  end
+
+  def ask_for_correct_coordinates
+    puts "Please enter a set of valid coordinates. "
+    user_input = gets.chomp.downcase
+    coordinates = user_input.split(" ")
+  end
 #---------------------------------------------
+# Helper methods that go with coordinate_validation
 #---------------------------------------------
 
-def coordinates_validation
-  #need a method for placement validation
+def cannot_overlap(human_or_computer_coordinates) 
+  if human_or_computer_coordinates.uniq == human_or_computer_coordinates
+    puts "Passes validation 1"
+  else
+    human_ship_placement
+  end
+end
+
+def cannot_go_over_board
+  #use select to see if coordinate given is in the list of possible coordinates in two_ship & three_ship
+
+end
+
+def horizontal_or_vertical(human_or_computer_coordinates)
+    get_array_values = human_or_computer_coordinates.map.with_index do |value, index|
+    value.partition(/[[:alpha:]]/)
+  end
+
+  if get_array_values[0][1].ord == get_array_values[1][1].ord &&
+    get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i
+      puts "Passes validation 2.1"
+  elsif get_array_values[0][1].ord + 1 == get_array_values[1][1].ord &&
+    get_array_values[0][2].to_i == get_array_values[1][2].to_i
+      puts "Passes validation 2.2"
+  else
+    human_ship_placement
+  end
+
+  #need an if statement and then loop over the original array
+  #as we iterate over the array, we are going to grab the values and split them apart
+  #and then get the 'ord' for the letters
+
+  # test = "a1".partition(/[[:alpha:]]/)
+  # # ["", "a", "1"]
+  # row = test[1].ord
+  # # 97
+  # column = test[2].ord
+  # #
 end
 
 
