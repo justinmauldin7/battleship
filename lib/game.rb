@@ -160,8 +160,9 @@ class Game
 
   def ask_for_correct_coordinates
     puts "Please enter a set of valid coordinates. "
-    user_input = gets.chomp.downcase
-    coordinates = user_input.split(" ")
+    #user_input = gets.chomp.downcase
+    #coordinates = user_input.split(" ")
+    human_ship_placement
   end
 #---------------------------------------------
 # Helper methods that go with coordinate_validation
@@ -172,7 +173,6 @@ def cannot_overlap(human_or_computer_coordinates)
     puts "Passes validation 1"
   else
     ask_for_correct_coordinates
-    human_ship_placement
   end
 end
 
@@ -195,7 +195,6 @@ def horizontal_or_vertical(human_or_computer_coordinates)
         puts "Passes validation 2.2"
     else
       ask_for_correct_coordinates
-      human_ship_placement
     end
   elsif get_array_values.count == 3
     if get_array_values[0][1].ord == get_array_values[1][1].ord &&
@@ -210,7 +209,6 @@ def horizontal_or_vertical(human_or_computer_coordinates)
         puts "Passes validation 2.2"
     else
       ask_for_correct_coordinates
-      human_ship_placement
     end
   end
   #need an if statement and then loop over the original array
