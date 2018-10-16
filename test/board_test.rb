@@ -30,14 +30,20 @@ class BoardTest < Minitest::Test
 
   def test_the_template_has_a_state
     board = Board.new
-    assert_equal "F", board.
+    assert_equal "E", board.template[:d3].state
   end
 
   def test_it_puts_the_grid
     board_1 = Board.new
-    output = " . 1 2 3 4 /n
-    A "
-    #binding.pry
-    assert_output (stdout = " ") {board_1.print_the_grid}
+    output =
+    "===================
+    . 1 2 3 4
+    A
+    B
+    C
+    D
+    ==================="
+    # binding.pry
+    assert_output (output) { board_1.print_the_grid }
   end
 end

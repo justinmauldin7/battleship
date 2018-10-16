@@ -1,6 +1,7 @@
 require './lib/game'
 require './lib/board'
 require './lib/spaces'
+require './lib/player'
 require 'pry'
 
 class Game
@@ -41,21 +42,19 @@ class Game
 
 
 
-          ----
+
           computer_ship_placement
           @number_of_ships.times do |method|
           human_ship_placement
           end
           @human_board.print_the_grid
           @human_board.print_the_ships
-          puts "Please enter a of coordinate: "
-          input = gets.chomp.to_sym
+          puts "Please enter a coordinate: "
+          input = gets.chomp
           player_1 = Player.new
           player_1.human_takes_a_shot(input)
-          get_random_coordinates_for_computer_player
-          split_ship_array_and_convert_to_symbol(ship_array)
-          computer_takes_a_shot(convert_coordinate)
-          -----
+          player_1.computer_takes_a_shot(convert_coordinate)
+
           break
         elsif (answer == "i")
           puts "Instructions:"
