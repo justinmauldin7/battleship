@@ -47,13 +47,14 @@ class Game
           @number_of_ships.times do |method|
           human_ship_placement
           end
-          @human_board.print_the_grid
+
           @human_board.print_the_ships
           puts "Please enter a coordinate: "
-          input = gets.chomp
+          input = gets.chomp.to_sym
           player_1 = Player.new
-          player_1.human_takes_a_shot(input)
-          player_1.computer_takes_a_shot(convert_coordinate)
+          player_1.human_takes_a_shot(input, @computer_board)
+          @computer_board.print_the_grid
+          player_1.computer_takes_a_shot(convert_coordinate, @human_board)
 
           break
         elsif (answer == "i")
@@ -65,7 +66,7 @@ class Game
           puts "4. The computer will fire a missile."
           puts "5. You will receive feedback on your launches."
           puts "================================================"
-          break
+
         elsif (answer == "q")
           puts "Thanks for playing!"
           break
@@ -148,6 +149,7 @@ class Game
   end
 
   def convert_coordinate(valid_human_coordinates)
+    binding.pry
     converted = valid_human_coordinates.map do |index|
       index.to_sym
     end
@@ -198,6 +200,8 @@ def horizontal_or_vertical(human_or_computer_coordinates)
     value.partition(/[[:alpha:]]/)
     end
 
+    converted = convert_coordinate(human_or_computer_coordinates)
+
     valid_human_coordinates = []
 
   if get_array_values.count == 2
@@ -206,13 +210,13 @@ def horizontal_or_vertical(human_or_computer_coordinates)
         valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
         valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         puts "Passes validation 2.1"
-        valid_human_coordinates
+        converted
     elsif get_array_values[0][1].ord + 1 == get_array_values[1][1].ord &&
       get_array_values[0][2].to_i == get_array_values[1][2].to_i
         valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
         valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         puts "Passes validation 2.2"
-        valid_human_coordinates
+        converted
     else
       ask_for_correct_coordinates
     end
@@ -225,7 +229,7 @@ def horizontal_or_vertical(human_or_computer_coordinates)
         valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         valid_human_coordinates <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
         puts "Passes validation 2.1"
-        valid_human_coordinates
+        converted
     elsif get_array_values[0][1].ord == get_array_values[1][1].ord &&
       get_array_values[1][1].ord == get_array_values[2][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i &&
@@ -234,7 +238,7 @@ def horizontal_or_vertical(human_or_computer_coordinates)
         valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         valid_human_coordinates <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
         puts "Passes validation 2.2"
-        valid_human_coordinates
+        converted
     else
       ask_for_correct_coordinates
     end
