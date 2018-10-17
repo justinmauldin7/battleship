@@ -4,10 +4,12 @@ require './lib/game'
 require 'pry'
 
 class Player
+  attr_reader :player_hits
 
   def initialize
     @player_ships = 2
-    # @player_shots = player_shots
+    @player_shots = 0
+    @player_hits = 0
   end
 
   def human_takes_a_shot(input, computer_board)
@@ -21,11 +23,14 @@ class Player
       if computer_board.template[input].shot_status == nil
         if computer_board.template[input].state == "E"
           puts "You missed on your shot."
+          puts "Number of hits: #{@player_hits}"
           computer_board.template[input].shot_status = "M"
 
         else
           computer_board.template[input].state == "F"
           puts "Good job! You hit a ship."
+          @player_hits += 1
+          puts "Number of hits: #{@player_hits}"
           computer_board.template[input].shot_status = "H"
         end
       else
@@ -47,7 +52,7 @@ class Player
     shot_random_index = shot_randomizer.rand(0..15)
     shot_array = spaces_for_shot.values_at(shot_random_index)
 
-    shot_symbol = shot_array.to_sym
+    shot_symbol = shot_array[0].to_sym
 
 
 
@@ -59,13 +64,17 @@ class Player
 
     if human_board.template[shot_symbol].shot_status == nil
       if human_board.template[shot_symbol].state == "E"
-        puts "The computer missed its shot at #{shot_array}."
+        puts "The computer missed its shot at #{shot_array[0]}."
+        puts "Number of hits: #{@player_hits}"
         human_board.template[shot_symbol].shot_status == "M"
       else
        human_board.template[shot_symbol].state == "F"
-       puts "The computer hit your ship with its shot at #{shot_array}."
+       puts "The computer hit your ship with its shot at #{shot_array[0]}."
+       @player_hits += 1
+       puts "Number of hits: #{@player_hits}"
        human_board.template[shot_symbol].shot_status == "H"
-     end
+      end
+    break
     end
     end
   end

@@ -45,16 +45,24 @@ class Game
 
           computer_ship_placement
           @number_of_ships.times do |method|
-          human_ship_placement
+            human_ship_placement
           end
 
           @human_board.print_the_ships
           puts "Please enter a coordinate: "
           input = gets.chomp.to_sym
-          player_1 = Player.new
-          player_1.human_takes_a_shot(input, @computer_board)
-          @computer_board.print_the_grid
-          player_1.computer_takes_a_shot(convert_coordinate, @human_board)
+          human_player = Player.new
+          computer_player = Player.new
+
+          loop do
+            if human_player.player_hits == 5 || computer_player.player_hits == 5
+              break
+            end
+            human_player.human_takes_a_shot(input, @computer_board)
+            @computer_board.print_the_grid
+            computer_player.computer_takes_a_shot(@human_board)
+            @human_board.print_the_grid
+          end
 
           break
         elsif (answer == "i")
@@ -80,10 +88,10 @@ class Game
 
   def computer_ship_placement
     ship_array = get_random_coordinates_for_computer_player
-    convert_coordinate = split_ship_array_and_convert_to_symbol(ship_array)
+    computer_convert_coordinate = split_ship_array_and_convert_to_symbol(ship_array)
     # computer_validated = cannot_overlap(convert_coordinate)
     # change_the_state(computer_validated)
-    change_the_state(convert_coordinate)
+    change_the_state(computer_convert_coordinate)
   end
   #---------------------------------------------
   # helper methods that go into computer_ship_placement
@@ -135,7 +143,7 @@ class Game
     human_validated_1 = cannot_overlap(coordinates)
     valid_human_coordinates = horizontal_or_vertical(human_validated_1)
     converted = convert_coordinate(valid_human_coordinates)
-    change_space_state_for_player_1(converted)
+    change_space_state_for_human_player(converted)
 
 
   end
@@ -149,14 +157,13 @@ class Game
   end
 
   def convert_coordinate(valid_human_coordinates)
-    binding.pry
     converted = valid_human_coordinates.map do |index|
       index.to_sym
     end
     converted
   end
 
-  def change_space_state_for_player_1(human_validated)
+  def change_space_state_for_human_player(human_validated)
     human_validated.each do |key|
     chosen_state = @human_board.template[key]
     chosen_state.state = "F"
@@ -200,21 +207,23 @@ def horizontal_or_vertical(human_or_computer_coordinates)
     value.partition(/[[:alpha:]]/)
     end
 
-    converted = convert_coordinate(human_or_computer_coordinates)
+    converted = human_or_computer_coordinates.map do |index|
+      index.to_sym
+    end
 
-    valid_human_coordinates = []
+    valid_human_array = []
 
   if get_array_values.count == 2
     if get_array_values[0][1].ord == get_array_values[1][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i
-        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
-        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
+        valid_human_array <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_array <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         puts "Passes validation 2.1"
         converted
     elsif get_array_values[0][1].ord + 1 == get_array_values[1][1].ord &&
       get_array_values[0][2].to_i == get_array_values[1][2].to_i
-        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
-        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
+        valid_human_array <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_array <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
         puts "Passes validation 2.2"
         converted
     else
@@ -225,68 +234,35 @@ def horizontal_or_vertical(human_or_computer_coordinates)
       get_array_values[1][1].ord == get_array_values[2][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i + 1 &&
       get_array_values[1][2].to_i + 1 == get_array_values[2][2].to_i
-        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
-        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
-        valid_human_coordinates <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
+        valid_human_array <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_array <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
+        valid_human_array <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
         puts "Passes validation 2.1"
         converted
     elsif get_array_values[0][1].ord == get_array_values[1][1].ord &&
       get_array_values[1][1].ord == get_array_values[2][1].ord &&
       get_array_values[0][2].to_i + 1 == get_array_values[1][2].to_i &&
       get_array_values[1][2].to_i + 1 == get_array_values[2][2].to_i
-        valid_human_coordinates <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
-        valid_human_coordinates <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
-        valid_human_coordinates <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
+        valid_human_array <<  "#{get_array_values[0][1]}#{get_array_values[0][2]}"
+        valid_human_array <<  "#{get_array_values[1][1]}#{get_array_values[1][2]}"
+        valid_human_array <<  "#{get_array_values[2][1]}#{get_array_values[2][2]}"
         puts "Passes validation 2.2"
         converted
     else
       ask_for_correct_coordinates
     end
   end
-  #need an if statement and then loop over the original array
-  #as we iterate over the array, we are going to grab the values and split them apart
-  #and then get the 'ord' for the letters
-
-  # test = "a1".partition(/[[:alpha:]]/)
-  # # ["", "a", "1"]
-  # row = test[1].ord
-  # # 97
-  # column = test[2].ord
-  # #
 end
 
 
-  def gets_spaces_status
-  end
-
-  def prompt_for_a_shot
-      #ask for coordinates
-  end
-
-  def display_shot_info
-    #display the coordinates of shot from user
-  end
-
-  def display_the_map
-    #display the ship and hit info from the board class
-  end
-
-  def computer_feedback_to_user
-    #give info on whether or not the computer
-    #hit or missed the player's ship
-  end
-
-  def display_computer_hits_and_misses
-    #display the board with h/misses
-  end
+  # def compare_space_status
+  #   if @human_board.template[].state == "F" && @human_board.template[].shot_status == "H"
+  #
+  #   @computer_board.template.state
+  # end
 
   def end_game_sequence
-    #give message to user based on
-    #ship.game_over
-  end
-
-  def game_time
-    #calculate time elapsed
+    puts "Thanks for playing BATTLESHIP!"
   end
 
   def number_of_shots
