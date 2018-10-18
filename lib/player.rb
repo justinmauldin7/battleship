@@ -51,10 +51,7 @@ class Player
     shot_randomizer = Random.new
     shot_random_index = shot_randomizer.rand(0..15)
     shot_array = spaces_for_shot.values_at(shot_random_index)
-
     shot_symbol = shot_array[0].to_sym
-
-
 
     loop do #until return is hit or miss
       if human_board.template[shot_symbol].shot_status == "M" ||
@@ -62,20 +59,20 @@ class Player
         break
       end
 
-    if human_board.template[shot_symbol].shot_status == nil
-      if human_board.template[shot_symbol].state == "E"
-        puts "The computer missed its shot at #{shot_array[0]}."
-        puts "Number of hits: #{@player_hits}"
-        human_board.template[shot_symbol].shot_status == "M"
-      else
-       human_board.template[shot_symbol].state == "F"
-       puts "The computer hit your ship with its shot at #{shot_array[0]}."
-       @player_hits += 1
-       puts "Number of hits: #{@player_hits}"
-       human_board.template[shot_symbol].shot_status == "H"
+      if human_board.template[shot_symbol].shot_status == nil
+        if human_board.template[shot_symbol].state == "E"
+          puts "The computer missed its shot at #{shot_array[0]}."
+          puts "Number of hits: #{@player_hits}"
+          human_board.template[shot_symbol].shot_status = "M"
+        else
+         human_board.template[shot_symbol].state == "F"
+         puts "The computer hit your ship with its shot at #{shot_array[0]}."
+         @player_hits += 1
+         puts "Number of hits: #{@player_hits}"
+         human_board.template[shot_symbol].shot_status = "H"
+        end
+          break
       end
-    break
-    end
     end
   end
 end

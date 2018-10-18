@@ -31,38 +31,39 @@ class Game
 
     if answer != "p" && answer != "i" && answer != "q"
       break
+    end
+
+    if (answer == "p")
+      puts "I have laid out my ships on the grid."
+      puts "You now need to layout your two ships."
+      puts "The first is two units long and the second is three units long."
+      puts "The grid has A1 at the top left and D4 at the bottom right."
+      puts " "
+
+      @number_of_ships.times do |method|
+        computer_ship_placement
       end
 
-        if (answer == "p")
-          puts "I have laid out my ships on the grid."
-          puts "You now need to layout your two ships."
-          puts "The first is two units long and the second is three units long."
-          puts "The grid has A1 at the top left and D4 at the bottom right."
-          puts " "
+      @number_of_ships.times do |method|
+        human_ship_placement
+      end
 
+      @human_board.print_the_ships
+      human_player = Player.new
+      computer_player = Player.new
 
-
-
-          computer_ship_placement
-          @number_of_ships.times do |method|
-            human_ship_placement
-          end
-
-          @human_board.print_the_ships
-          puts "Please enter a coordinate: "
-          input = gets.chomp.to_sym
-          human_player = Player.new
-          computer_player = Player.new
-
-          loop do
-            if human_player.player_hits == 5 || computer_player.player_hits == 5
-              break
-            end
-            human_player.human_takes_a_shot(input, @computer_board)
-            @computer_board.print_the_grid
-            computer_player.computer_takes_a_shot(@human_board)
-            @human_board.print_the_grid
-          end
+      loop do
+        if human_player.player_hits == 5 || computer_player.player_hits == 5
+          end_game_sequence
+          break
+        end
+        puts "Please enter a coordinate: "
+        input = gets.chomp.to_sym
+        human_player.human_takes_a_shot(input, @computer_board)
+        @computer_board.print_the_grid
+        computer_player.computer_takes_a_shot(@human_board)
+        @human_board.print_the_grid
+        end
 
           break
         elsif (answer == "i")
